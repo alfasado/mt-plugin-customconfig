@@ -1,0 +1,37 @@
+name: CustomConfig
+id:   CustomConfig
+key:  customconfig
+version: 1.0
+schema_version: 0.12
+author_link: https://github.com/alfasado
+author_name: Alfasado Inc.
+l10n_class: CustomConfig::L10N
+description: <__trans phrase="Create and manage system scope coutom configuration.">
+callbacks:
+    init_app: $customconfig::CustomConfig::Plugin::_init_tags
+applications:
+    cms:
+        methods:
+            list_customconfig: $customconfig::CustomConfig::Plugin::_list_customconfig
+        menus:
+            settings:list_customconfig:
+                label: Custom Config
+                order: 1000
+                mode: list_customconfig
+                system_permission: administer
+                view: system
+tags:
+    block:
+        CustomConfigLoop: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_loop
+        CustomConfig: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_loop
+    function:
+        CustomConfigID: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_column
+        CustomConfigName: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_column
+        CustomConfigPriority: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_column
+        CustomConfigValue: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_column
+        CustomConfigKey: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_column
+        CustomConfigCreatedOn: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_date
+        CustomConfigModifiedOn: $customconfig::CustomConfig::Plugin::_hdlr_customconfig_date
+        CustomConfigAuthorDisplayName: $customconfig::CustomConfig::Plugin::_hdlr_author_displayname
+object_types:
+    customconfig: CustomConfig::CustomConfig

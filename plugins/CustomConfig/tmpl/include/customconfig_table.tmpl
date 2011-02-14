@@ -1,0 +1,126 @@
+<__trans_section component="CustomConfig">
+<mt:setvarblock name="list_id"><mt:var name="object_type">-listing</mt:setvarblock>
+<mt:setvarblock name="action_buttons">
+        <button
+            class="mt-delete-items"
+            onclick="doRemoveItems(getByID('<mt:var name="object_type">-listing-form'), '<__trans phrase="Custom Config" escape="js">', '<__trans phrase="Custom Config" escape="js">'); return false;"
+            accesskey="x"
+            title="<__trans phrase="Delete selected Custom Config (x)">"
+            ><__trans phrase="Delete"></button>
+</mt:setvarblock>
+<mt:setvarblock name="table_header">
+    <tr>
+        <th class="cb"><input type="checkbox" name="id-head" value="all" class="select" /></th>
+        <th class="name" style="width:158px"><__trans phrase="Name"></th>
+        <th class="priority" style="width:45px"><__trans phrase="Priority"></th>
+        <th class="key"><__trans phrase="Key"></th>
+        <th class="value"><__trans phrase="Value"></th>
+        <th class="author_name" style="width:60px"><__trans phrase="Author"></th>
+    </tr>
+</mt:setvarblock>
+
+<script type="text/javascript">
+    var current_cell = 0;
+</script>
+
+<mtapp:listing id="$list_id">
+    <mt:if __first__>
+            <thead><mt:var name="table_header"></thead>
+            <tfoot><mt:var name="table_header"></tfoot>
+            <tbody>
+    </mt:if>
+                <tr class="<mt:if name="__odd__">odd<mt:else>even</mt:if>">
+                    <td class="cb">
+                        <input type="checkbox" name="id" value="<mt:var name="id" escape="html">" class="select" />
+                    </td>
+                    <td id="td-customconfig-name-<mt:var name="id">" class="name" colspan="1">
+                        <a href="javascript:void(0);"
+                           id="customconfig-<mt:var name="id">-text"
+                           onclick="
+                            this.style.display='none';
+                            getByID('customconfig-<mt:var name="id">-span').style.display='inline';
+                            getByID('customconfig-priority-<mt:var name="id">').style.display='inline';
+                            getByID('customconfig-key-<mt:var name="id">').style.display='inline';
+                            getByID('customconfig-value-<mt:var name="id">').style.display='inline';
+                            getByID('a-customconfig-priority-<mt:var name="id">').style.display='none';
+                            getByID('a-customconfig-key-<mt:var name="id">').style.display='none';
+                            getByID('a-customconfig-value-<mt:var name="id">').style.display='none';
+                            if ( current_cell ) {
+                                getByID('customconfig-'+current_cell+'-span').style.display='none';
+                                getByID('customconfig-priority-'+current_cell).style.display='none';
+                                getByID('customconfig-key-'+current_cell).style.display='none';
+                                getByID('customconfig-value-'+current_cell).style.display='none';
+                                getByID('a-customconfig-priority-'+current_cell).style.display='inline';
+                                getByID('a-customconfig-key-'+current_cell).style.display='inline';
+                                getByID('a-customconfig-value-'+current_cell).style.display='inline';
+                                getByID('customconfig-'+current_cell+'-text').style.display='inline';
+                            }
+                            current_cell = <mt:var name="id">;
+                        "><mt:var name="name" escape="html"></a>
+                        <span id="customconfig-<mt:var name="id">-span" style="display:none;white-space:nowrap">
+                        <a>
+                        <input id="customconfig-<mt:var name="id">" style="font-size:1em;width:auto;" type="text" value="<mt:var name="name_raw" escape="html">" />
+                            <span class="buttons">
+                                <button
+                                        onclick="
+                                             getByID('customconfig-name').value=getByID('customconfig-<mt:var name="id">').value;
+                                             getByID('customconfig-priority').selectedIndex=getByID('customconfig-priority-<mt:var name="id">').selectedIndex;
+                                             getByID('customconfig-key').value=getByID('customconfig-key-<mt:var name="id">').value;
+                                             getByID('customconfig-value').value=getByID('customconfig-value-<mt:var name="id">').value;
+                                             getByID('customconfig-id-field').value=<mt:var name="id">;
+                                             getByID('customconfig-return_args').value=getByID('customconfig-return_args').value+'&update=1';
+                                             getByID('create-inline-customconfig-form').submit();
+                                             return false;"
+                                        type="submit"
+                                        class="small-button"
+                                    ><__trans phrase="Update"></button>
+                                <button
+                                    onclick="
+                                        getByID('customconfig-<mt:var name="id">-text').style.display='inline';
+                                        getByID('customconfig-<mt:var name="id">-span').style.display='none';
+                                        getByID('customconfig-priority-<mt:var name="id">').style.display='none';
+                                        getByID('customconfig-key-<mt:var name="id">').style.display='none';
+                                        getByID('customconfig-value-<mt:var name="id">').style.display='none';
+                                        getByID('a-customconfig-priority-<mt:var name="id">').style.display='inline';
+                                        getByID('a-customconfig-key-<mt:var name="id">').style.display='inline';
+                                        getByID('a-customconfig-value-<mt:var name="id">').style.display='inline';
+                                        current_cell = 0;
+                                    "
+                                    type="button"
+                                    class="small-button mt-cancel-action"
+                                    ><__trans phrase="Cancel"></button>
+                            </span>
+                        </a>
+                        </span>
+                    </td>
+                    <td class="priority">
+                    <a id="a-customconfig-priority-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=priority&filter_val=<mt:var name="priority" escape="url">"><mt:var name="priority" escape="html"></a>
+                    <select id="customconfig-priority-<mt:var name="id">" style="display:none">
+                        <mt:for var="i" from="1" to="10">
+                            <option value="<mt:var name="i">" <mt:if name="priority" eq="$i">selected="selected"</mt:if>><mt:var name="i"></option>
+                        </mt:for>
+                    </select>
+                    </td>
+                    <td class="key">
+                    <a id="a-customconfig-key-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=key&filter_val=<mt:var name="key_raw" escape="url">">
+                    <mt:var name="key" escape="html">
+                    </a>
+                    <input id="customconfig-key-<mt:var name="id">" style="font-size:1em;display:none;width:auto;" type="text" value="<mt:var name="key_raw" escape="html">" />
+                    </td>
+                    <td class="value">
+                    <a id="a-customconfig-value-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=key&filter_val=<mt:var name="value_raw" escape="url">">
+                    <mt:var name="value" escape="html">
+                    </a>
+                    <input id="customconfig-value-<mt:var name="id">" style="font-size:1em;display:none;width:auto;" type="text" value="<mt:var name="value_raw" escape="html">" />
+                    </td>
+                    <td class="author_name">
+                    <a href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=author_id&filter_val=<mt:var name="author_id">">
+                    <mt:var name="author_name" escape="html">
+                    </a>
+                    </td>
+                </tr>
+    <mt:if __last__>
+            </tbody>
+    </mt:if>
+</mtapp:listing>
+</__trans_section>

@@ -1,0 +1,99 @@
+<__trans_section component="CustomConfig">
+<mt:setvar name="page_title" value="<__trans phrase="Manage Custom Config">">
+<mt:setvarblock name="html_head" append="1">
+</mt:setvarblock>
+<mt:setvarblock name="system_msg">
+    <mt:if name="saved">
+        <mtapp:statusmsg
+            id="saved"
+            class="success">
+                <__trans phrase="The Custom Config has have been saved.">
+        </mtapp:statusmsg>
+    </mt:if>
+    <mt:if name="saved_deleted">
+        <mtapp:statusmsg
+            id="saved-deleted"
+            class="success">
+                <__trans phrase="The Custom Config has been deleted from the database.">
+        </mtapp:statusmsg>
+    </mt:if>
+</mt:setvarblock>
+
+<mt:setvarblock name="content_header">
+    <ul class="action-customconfig-list" id="action-customconfig-list">
+        <li><a href="javascript:void(0);" onclick="getByID('create-inline-customconfig').style.display='block';
+                                                   getByID('action-customconfig-list').style.display='none';
+                                                   return false"
+               class="icon-left icon-create"><__trans phrase="Create Custom Config"></a></li>
+    </ul>
+</mt:setvarblock>
+
+<mt:setvarblock name="related_content">
+    <mtapp:PageActions from="$mode">
+</mt:setvarblock>
+
+<mt:setvar name="options-class" value="absolute">
+
+<mt:setvarblock name="html_body_footer">
+    <mt:include name="include/display_options.tmpl">
+</mt:setvarblock>
+
+<mt:setvarblock name="html_head" append="1">
+<script type="text/javascript">
+/* <![CDATA[ */
+var tableSelect;
+function init()
+{
+    // setup
+    tableSelect = new TC.TableSelect( "<mt:var name="object_type">-listing-table" );
+    tableSelect.rowSelect = true;
+}
+TC.attachLoadEvent( init );
+/* ]]> */
+</script>
+</mt:setvarblock>
+<mt:include name="include/header.tmpl">
+
+<div class="create-inline" id="create-inline-customconfig" style="display:none">
+<form method="post" action="<mt:var name="script_url">" id="create-inline-customconfig-form">
+<input type="hidden" name="__mode" value="save" />
+<input type="hidden" name="_type" value="customconfig" />
+<input type="hidden" name="return_args" id="customconfig-return_args" value="__mode=list_customconfig" />
+<input type="hidden" name="id" id="customconfig-id-field" value="" />
+<input type="hidden" name="magic_token" value="<mt:var name="magic_token">" />
+<div id="name-field" class="field field-inline ">
+    <div class="field-header">
+        <label id="name-label" for="name"><__trans phrase="Custom Config"></label>
+    </div>
+    <div class="field-content ">
+        &nbsp;<label style="color:gray"><__trans phrase="Name"> : <input style="width:18%" type="text" name="name" id="customconfig-name" value="" /></label>
+        &nbsp;<label style="color:gray"><__trans phrase="Priority"> :
+            <select id="customconfig-priority" name="priority">
+                <mt:for var="i" from="1" to="10">
+                    <option value="<mt:var name="i">"><mt:var name="i"></option>
+                </mt:for>
+            </select>
+        </label>
+        &nbsp;<label style="color:gray"><__trans phrase="Key"> : <input style="width:16%" type="text" name="key" id="customconfig-key" value="" /></label>
+        &nbsp;<label style="color:gray"><__trans phrase="Value"> : <input style="width:16%" type="text" name="value" id="customconfig-value" value="" /></label>
+    </div>
+    <span class="buttons">
+        <button
+            type="submit"
+            class="small-button"
+            ><__trans phrase="Add"></button>
+        <button
+            onclick="getByID('create-inline-customconfig').style.display='none';
+                     getByID('action-customconfig-list').style.display='block';
+                     return false;"
+            type="button"
+            class="small-button mt-cancel-action"
+            ><__trans phrase="Cancel"></button>
+    </span>
+</div>
+</form>
+</div>
+
+<mt:include name="include/customconfig_table.tmpl">
+<mt:include name="include/footer.tmpl">
+</__trans_section>
