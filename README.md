@@ -5,6 +5,10 @@
 Create and manage system scope coutom configuration and you can register a custom MT tag on system level.
 CustomConfig object has 'Name', 'Key' and 'Value'. To create and manage CustomConfig object(s), 'System Overview' &raquo; (menu)'Settings' &raquo; 'Custom Config'.
 
+## Screenshot
+
+![Screenshot](https://github.com/alfasado/mt-plugin-customconfig/raw/master/Screenshot.png)
+
 ## Template Tags
 
 ---------------------------------------
