@@ -19,6 +19,7 @@ our %Lexicon = (
     'Custom Config \'[_1]\' (ID:[_2]) edited by \'[_3]\''  => '\'[_3]\'がカスタム設定\'[_1]\'(ID:[_2])を更新しました。',
     'Custom Config \'[_1]\' (ID:[_2]) deleted by \'[_3]\'' => '\'[_3]\'がカスタム設定\'[_1]\'(ID:[_2])を削除しました。',
     '(Unknown)' => '不明なユーザー',
+    'Delete selected Custom Config (x)' => '選択されたカスタム設定を削除 (x)',
 );
 
 1;
