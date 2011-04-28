@@ -19,6 +19,39 @@
     </mt:if>
 </mt:setvarblock>
 
+<mt:setvarblock name="list_filter_form">
+<form id="filter-form" method="get" action="<mt:var name="mt_url">">
+    <input type="hidden" name="__mode" value="list_<mt:var name="object_type">" />
+        <mt:if name="blog_id">
+    <input type="hidden" name="blog_id" value="<mt:var name="blog_id">" />
+        </mt:if>
+    <input id="filter" type="hidden" name="filter" value="" />
+    <input id="filter_val" type="hidden" name="filter_val" value="" />
+    <input type="hidden" name="class" value="<mt:var name="class">" />
+        <mt:if name="dialog_view">
+    <input type="hidden" name="dialog_view" value="1" />
+    <input type="hidden" name="edit_field" value="<mt:var name="edit_field" escape="html">" />
+    <input type="hidden" name="costomobject_select" value="1" />
+    <input type="hidden" name="dialog" value="1" />
+        </mt:if>
+</form>
+<div class="listing-filter">
+    <div class="listing-filter-inner inner pkg">
+            <div class="filter">
+                <div id="filter-title" class="filter-title">
+                <mt:unless name="filter">
+                    <strong><__trans phrase="All [_1]" params="<mt:var name="object_label_plural">"></strong>
+                <mt:else>
+                <strong>
+                    <__trans phrase="[_1] where [_2] is [_3]" params='<mt:var name="object_label_plural">%%<span id="filter-text-col"><mt:var name="filter" escape="html"></span>%%<span id="filter-text-val"><mt:var name="filter_val" escape="html"></span>'>
+                </strong>
+                    <a href="<mt:var name="script_url">?__mode=<mt:var name="mode" escape="url"><mt:if name="blog_id">&amp;blog_id=<mt:var name="blog_id"></mt:if>">[ <__trans phrase="Remove filter"> ]</a>
+                </mt:unless>
+                </div>
+            </div>
+    </div>
+</div>
+</mt:setvarblock>
 <mt:setvarblock name="content_header">
     <ul class="action-customconfig-list" id="action-customconfig-list">
         <li><a href="javascript:void(0);" onclick="getByID('create-inline-customconfig').style.display='block';
@@ -30,12 +63,40 @@
 
 <mt:setvarblock name="related_content">
     <mtapp:PageActions from="$mode">
+<mtapp:widget
+    id="display-options-widget"
+    class="display-options-widget"
+    label="<__trans phrase="Display Options">">
+    <form method="get" action="<mt:var name="SCRIPT_URL">" id="display-options-form">
+        <input type="hidden" name="__mode" value="update_list_prefs" />
+        <input type="hidden" name="_type" value="<mt:var name="OBJECT_TYPE">" />
+        <input type="hidden" name="return_args" value="<mt:var name="RETURN_ARGS" escape="HTML">" />
+        <mtapp:setting
+            id="per_page"
+            label="<__trans phrase="_DISPLAY_OPTIONS_SHOW">"
+            label_class="display-options">
+            <select name="limit">
+                <option value="25"<mt:if name="LIMIT_25"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="25"></option>
+                <option value="50"<mt:if name="LIMIT_50"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="50"></option>
+                <option value="100"<mt:if name="LIMIT_100"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="100"></option>
+                <option value="200"<mt:if name="LIMIT_200"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="200"></option>
+            </select>
+        </mtapp:setting>
+        <div class="actions-bar display-options-actions-bar buttons">
+            <button
+                mt:command="submit"
+                class="button"
+                title="<__trans phrase="Save display options">"
+                ><__trans phrase="Save"></button>
+        </div>
+    </form>
+</mtapp:widget>
 </mt:setvarblock>
 
 <mt:setvar name="options-class" value="absolute">
 
 <mt:setvarblock name="html_body_footer">
-    <mt:include name="include/display_options.tmpl">
+<MTIgnore><mt:include name="include/display_options.tmpl"></MTIgnore>
 </mt:setvarblock>
 
 <mt:setvarblock name="html_head" append="1">
@@ -62,9 +123,11 @@ TC.attachLoadEvent( init );
 <input type="hidden" name="id" id="customconfig-id-field" value="" />
 <input type="hidden" name="magic_token" value="<mt:var name="magic_token">" />
 <div id="name-field" class="field field-inline ">
+<MTIgnore>
     <div class="field-header">
         <label id="name-label" for="name"><__trans phrase="Custom Config"></label>
     </div>
+</MTIgnore>
     <div class="field-content ">
         &nbsp;<label style="color:gray"><__trans phrase="Name"> : <input style="width:18%" type="text" name="name" id="customconfig-name" value="" /></label>
         &nbsp;<label style="color:gray"><__trans phrase="Priority"> :
@@ -80,20 +143,20 @@ TC.attachLoadEvent( init );
     <span class="buttons">
         <button
             type="submit"
-            class="small-button"
+            class="small-button button"
             ><__trans phrase="Add"></button>
         <button
             onclick="getByID('create-inline-customconfig').style.display='none';
                      getByID('action-customconfig-list').style.display='block';
                      return false;"
             type="button"
-            class="small-button mt-cancel-action"
+            class="small-button mt-cancel-action button"
             ><__trans phrase="Cancel"></button>
     </span>
 </div>
 </form>
 </div>
-
+<mt:var name="list_filter_form">
 <mt:include name="include/customconfig_table.tmpl">
 <mt:include name="include/footer.tmpl">
 </__trans_section>

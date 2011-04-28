@@ -29,14 +29,26 @@ sub _init_tags {
     }
 }
 
+sub _pre_run {
+    my ( $cb, $app ) = @_;
+    if (! $app->blog ) {
+        my $usermenu = MT->component( 'UserMenu' );
+        my $powercms = MT->component( 'PowerCMS' );
+        if ( $usermenu || $powercms ) {
+            my $menus = MT->registry( 'applications', 'cms', 'menus' );
+            $menus->{ 'settings:list_customconfig' }->{ view } = [ 'user', 'system' ];
+        }
+    }
+    return 1;
+}
+
 sub _list_customconfig {
     require File::Spec;
     my $plugin = MT->component( 'CustomConfig' );
     my $app = shift;
     my $user  = $app->user;
     my $mode = $app->mode;
-    my $list_id = $mode;
-    $list_id =~ s/^list_//;
+    my $list_id = 'customconfig';
     if ( defined $app->blog ) {
         $app->return_to_dashboard( redirect => 1 );
     }

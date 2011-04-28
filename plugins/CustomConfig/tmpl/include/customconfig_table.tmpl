@@ -2,7 +2,7 @@
 <mt:setvarblock name="list_id"><mt:var name="object_type">-listing</mt:setvarblock>
 <mt:setvarblock name="action_buttons">
         <button
-            class="mt-delete-items"
+            class="mt-delete-items button"
             onclick="doRemoveItems(getByID('<mt:var name="object_type">-listing-form'), '<__trans phrase="Custom Config" escape="js">', '<__trans phrase="Custom Config" escape="js">'); return false;"
             accesskey="x"
             title="<__trans phrase="Delete selected Custom Config (x)">"
@@ -10,12 +10,14 @@
 </mt:setvarblock>
 <mt:setvarblock name="table_header">
     <tr>
-        <th class="cb"><input type="checkbox" name="id-head" value="all" class="select" /></th>
-        <th class="name" style="width:158px"><__trans phrase="Name"></th>
-        <th class="priority" style="width:45px"><__trans phrase="Priority"></th>
-        <th class="key"><__trans phrase="Key"></th>
-        <th class="value"><__trans phrase="Value"></th>
-        <th class="author_name" style="width:60px"><__trans phrase="Author"></th>
+        <th style="padding:7px" class="col head cb"><input type="checkbox" name="id-head" value="all" class="select" /></th>
+        <th style="padding:7px;width:160px" class="col head name" style="width:158px"><__trans phrase="Name"></th>
+        <th style="padding:7px;width:40px" class="col head priority" style="width:45px"><__trans phrase="Priority"></th>
+        <th style="padding:7px;" class="col head key"><__trans phrase="Key"></th>
+        <th style="padding:7px;" class="col head value"><__trans phrase="Value"></th>
+        <MTIgnore>
+        <th style="padding:7px;" class="col head author_name" style="width:60px"><__trans phrase="Author"></th>
+        </MTIgnore>
     </tr>
 </mt:setvarblock>
 
@@ -30,10 +32,10 @@
             <tbody>
     </mt:if>
                 <tr class="<mt:if name="__odd__">odd<mt:else>even</mt:if>">
-                    <td class="cb">
+                    <td class="col cb">
                         <input type="checkbox" name="id" value="<mt:var name="id" escape="html">" class="select" />
                     </td>
-                    <td id="td-customconfig-name-<mt:var name="id">" class="name" colspan="1">
+                    <td id="td-customconfig-name-<mt:var name="id">" class="col name" colspan="1">
                         <a href="javascript:void(0);"
                            id="customconfig-<mt:var name="id">-text"
                            onclick="
@@ -72,7 +74,7 @@
                                              getByID('create-inline-customconfig-form').submit();
                                              return false;"
                                         type="submit"
-                                        class="small-button"
+                                        class="small-button button"
                                     ><__trans phrase="Update"></button>
                                 <button
                                     onclick="
@@ -87,37 +89,39 @@
                                         current_cell = 0;
                                     "
                                     type="button"
-                                    class="small-button mt-cancel-action"
+                                    class="small-button mt-cancel-action button"
                                     ><__trans phrase="Cancel"></button>
                             </span>
                         </a>
                         </span>
                     </td>
-                    <td class="priority">
+                    <td class="col priority">
                     <a id="a-customconfig-priority-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=priority&filter_val=<mt:var name="priority" escape="url">"><mt:var name="priority" escape="html"></a>
-                    <select id="customconfig-priority-<mt:var name="id">" style="display:none">
+                    <a><select id="customconfig-priority-<mt:var name="id">" style="display:none">
                         <mt:for var="i" from="1" to="10">
                             <option value="<mt:var name="i">" <mt:if name="priority" eq="$i">selected="selected"</mt:if>><mt:var name="i"></option>
                         </mt:for>
-                    </select>
+                    </select></a>
                     </td>
-                    <td class="key">
+                    <td class="col key">
                     <a id="a-customconfig-key-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=key&filter_val=<mt:var name="key_raw" escape="url">">
                     <mt:var name="key" escape="html">
                     </a>
                     <input id="customconfig-key-<mt:var name="id">" style="font-size:1em;display:none;width:auto;" type="text" value="<mt:var name="key_raw" escape="html">" />
                     </td>
-                    <td class="value">
-                    <a id="a-customconfig-value-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=key&filter_val=<mt:var name="value_raw" escape="url">">
+                    <td class="col value">
+                    <a id="a-customconfig-value-<mt:var name="id">" href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=value&filter_val=<mt:var name="value_raw" escape="url">">
                     <mt:var name="value" escape="html">
                     </a>
                     <input id="customconfig-value-<mt:var name="id">" style="font-size:1em;display:none;width:auto;" type="text" value="<mt:var name="value_raw" escape="html">" />
                     </td>
-                    <td class="author_name">
+                    <MTIgnore>
+                    <td class="col author_name">
                     <a href="<mt:var name="mt_url">?__mode=list_customconfig&amp;filter=author_id&filter_val=<mt:var name="author_id">">
                     <mt:var name="author_name" escape="html">
                     </a>
                     </td>
+                    </MTIgnore>
                 </tr>
     <mt:if __last__>
             </tbody>
