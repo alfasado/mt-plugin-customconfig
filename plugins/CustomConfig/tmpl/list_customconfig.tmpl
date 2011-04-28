@@ -37,18 +37,18 @@
 </form>
 <div class="listing-filter">
     <div class="listing-filter-inner inner pkg">
-            <div class="filter">
-                <div id="filter-title" class="filter-title">
-                <mt:unless name="filter">
-                    <strong><__trans phrase="All [_1]" params="<mt:var name="object_label_plural">"></strong>
-                <mt:else>
-                <strong>
-                    <__trans phrase="[_1] where [_2] is [_3]" params='<mt:var name="object_label_plural">%%<span id="filter-text-col"><mt:var name="filter" escape="html"></span>%%<span id="filter-text-val"><mt:var name="filter_val" escape="html"></span>'>
-                </strong>
-                    <a href="<mt:var name="script_url">?__mode=<mt:var name="mode" escape="url"><mt:if name="blog_id">&amp;blog_id=<mt:var name="blog_id"></mt:if>">[ <__trans phrase="Remove filter"> ]</a>
-                </mt:unless>
-                </div>
+        <div class="filter">
+            <div id="filter-title" class="filter-title">
+            <mt:unless name="filter">
+                <strong><__trans phrase="All [_1]" params="<mt:var name="object_label_plural">"></strong>
+            <mt:else>
+            <strong>
+                <__trans phrase="[_1] where [_2] is [_3]" params='<mt:var name="object_label_plural">%%<span id="filter-text-col"><mt:var name="filter" escape="html"></span>%%<span id="filter-text-val"><mt:var name="filter_val" escape="html"></span>'>
+            </strong>
+                <a href="<mt:var name="script_url">?__mode=<mt:var name="mode" escape="url"><mt:if name="blog_id">&amp;blog_id=<mt:var name="blog_id"></mt:if>">[ <__trans phrase="Remove filter"> ]</a>
+            </mt:unless>
             </div>
+        </div>
     </div>
 </div>
 </mt:setvarblock>
@@ -63,6 +63,7 @@
 
 <mt:setvarblock name="related_content">
     <mtapp:PageActions from="$mode">
+<MTIgnore>
 <mtapp:widget
     id="display-options-widget"
     class="display-options-widget"
@@ -91,12 +92,43 @@
         </div>
     </form>
 </mtapp:widget>
+</MTIgnore>
 </mt:setvarblock>
 
 <mt:setvar name="options-class" value="absolute">
-
 <mt:setvarblock name="html_body_footer">
+<mt:setvar name="show_display_options_link" value="1">
 <MTIgnore><mt:include name="include/display_options.tmpl"></MTIgnore>
+<$MTVersion setvar="mt_version"$>
+<mt:if name="mt_version" like="5.0">
+<mt:include name="include/display_options.tmpl">
+<mt:else>
+<mt:setvarblock name="display_options">
+<div id="display-options-detail" class="display-options-detail detail">
+  <mtapp:setting
+     id="per_page"
+     label="<__trans phrase="_DISPLAY_OPTIONS_SHOW">"
+     label_class="top-label">
+    <form method="get" action="<mt:var name="SCRIPT_URL">" id="display-options-form">
+        <input type="hidden" name="__mode" value="update_list_prefs" />
+        <input type="hidden" name="_type" value="<mt:var name="OBJECT_TYPE">" />
+        <input type="hidden" name="return_args" value="<mt:var name="RETURN_ARGS" escape="HTML">" />
+        <select name="limit">
+            <option value="25"<mt:if name="LIMIT_25"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="25"></option>
+            <option value="50"<mt:if name="LIMIT_50"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="50"></option>
+            <option value="100"<mt:if name="LIMIT_100"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="100"></option>
+            <option value="200"<mt:if name="LIMIT_200"> selected="selected"</mt:if>><__trans phrase="[quant,_1,row,rows]" params="200"></option>
+        </select>
+        <button
+            mt:command="submit"
+            class="button"
+            title="<__trans phrase="Save display options">"
+            ><__trans phrase="Save"></button>
+    </form>
+  </mtapp:setting>
+</div>
+</mt:setvarblock>
+</mt:if>
 </mt:setvarblock>
 
 <mt:setvarblock name="html_head" append="1">
