@@ -10,6 +10,8 @@ description: <__trans phrase="Create and manage system scope coutom configuratio
 callbacks:
     init_app: $customconfig::CustomConfig::Plugin::_init_tags
     MT::App::CMS::pre_run: $customconfig::CustomConfig::Plugin::_pre_run
+    cms_save_permission_filter.customconfig: sub { my $app = MT->instance(); return 0 unless ( $app->user->is_superuser ) }
+    cms_delete_permission_filter.customconfig: sub { my $app = MT->instance(); return 0 unless ( $app->user->is_superuser ) }
 applications:
     cms:
         methods:
